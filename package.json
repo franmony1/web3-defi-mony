@@ -1,0 +1,22 @@
+{
+  "name": "web3-defi-mony",
+  "version": "1.0.0",
+  "description": "A Web3 DeFi library for Ethereum blockchain interactions",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive --exit"
+  },
+  "keywords": ["web3", "defi", "ethereum"],
+  "author": "franmony1",
+  "license": "MIT",
+  "dependencies": {
+    "web3": "^1.5.2",
+    "ethers": "^5.4.7",
+    "@uniswap/sdk": "^3.0.2",
+    "@makerdao/dai": "^1.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.3.2",
+    "chai": "^4.3.4"
+  }
+}
