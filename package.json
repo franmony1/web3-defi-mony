@@ -1,6 +1,6 @@
 {
   "name": "web3-defi-mony",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Web3 DeFi library for Ethereum blockchain interactions",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,8 @@
     "web3": "^1.5.2",
     "ethers": "^5.4.7",
     "@uniswap/sdk": "^3.0.2",
-    "@makerdao/dai": "^1.1.0"
+    "@makerdao/dai": "^1.1.0",
+    "financial-statistics": "https://github.com/franmony1/financial-statistics"
   },
   "devDependencies": {
     "mocha": "^8.3.2",

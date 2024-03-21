@@ -3,6 +3,7 @@ const Web3 = require('web3');
 const { ethers } = require('ethers');
 const { Token, TokenAmount, TradeType, Route, Trade, Pair, Fetcher } = require('@uniswap/sdk');
 const { DAI } = require("@makerdao/dai");
+const financialStats = require('financial-statistics');
 const FlashLoans = require('./lib/flashloans');
 const CrossChain = require('./lib/crosschain');
 const Automation = require('./lib/automation');
@@ -31,48 +32,99 @@ class Web3DeFi {
     this.smartContracts = new SmartContracts(this.provider);
   }
 
+  // ... ()
+
   /**
-   * Get the balance of an Ethereum address.
-   * @param {string} address - The Ethereum address.
-   * @returns {Promise<string>} The balance of the address.
+   * Calculate the annual percentage yield (APY)
+   * @param {number} interestRate Interest rate
+   * @param {number} compoundFrequency Compound frequency
+   * @returns {number}
    */
-  async getBalance(address) {
-    return await this.web3.eth.getBalance(address);
+  async calculateAPY(interestRate, compoundFrequency) {
+    return financialStats.calculateAPY(interestRate, compoundFrequency);
   }
 
   /**
-   * Send a transaction on the Ethereum network.
-   * @param {Object} transaction - The transaction object.
-   * @returns {Promise<string>} The transaction hash.
+   * Calculate the loan interest
+   * @param {number} principal Principal amount
+   * @param {number} interestRate Interest rate
+   * @param {number} loanTerm Loan term (years)
+   * @returns {number}
    */
-  async sendTransaction(transaction) {
-    return await this.web3.eth.sendTransaction(transaction);
+  async calculateLoanInterest(principal, interestRate, loanTerm) {
+    return financialStats.calculateLoanInterest(principal, interestRate, loanTerm);
   }
 
   /**
-   * Get a Uniswap trade for swapping tokens.
-   * @param {string} amountIn - The amount of tokens to swap.
-   * @param {string} tokenInSymbol - The symbol of the input token.
-   * @param {string} tokenOutSymbol - The symbol of the output token.
-   * @returns {Promise<Trade>} The Uniswap trade object.
+   * Get the current price of a stablecoin
+   * @param {string} symbol Stablecoin symbol
+   * @returns {Promise<number>}
    */
-  async getUniswapTrade(amountIn, tokenInSymbol, tokenOutSymbol) {
-    const tokenIn = await Fetcher.fetchTokenData(this.provider, tokenInSymbol);
-    const tokenOut = await Fetcher.fetchTokenData(this.provider, tokenOutSymbol);
-    const pair = await Fetcher.fetchPairData(tokenIn, tokenOut, this.provider);
-    const route = new Route([pair], tokenIn);
-    const trade = new Trade(route, new TokenAmount(tokenIn, amountIn), TradeType.EXACT_INPUT);
-    return trade;
+  async getStablecoinPrice(symbol) {
+    return financialStats.getStablecoinPrice(symbol);
   }
 
   /**
-   * Get the exchange rate of MakerDAO's DAI stablecoin.
-   * @returns {Promise<string>} The exchange rate of DAI.
+   * Calculate the earnings for a liquidity provider
+   * @param {number} liquidityTokens Liquidity tokens held
+   * @param {number} totalLiquidity Total liquidity
+   * @param {number} totalFees Total fees collected
+   * @returns {number}
    */
-  async getMakerDAOExchangeRate() {
-    const dai = new DAI(this.provider);
-    const exchangeRate = await dai.getRate();
-    return exchangeRate;
+  async calculateLiquidityProviderEarnings(liquidityTokens, totalLiquidity, totalFees) {
+    return financialStats.calculateLiquidityProviderEarnings(liquidityTokens, totalLiquidity, totalFees);
+  }
+
+  /**
+   * Calculate the simple moving average (SMA)
+   * @param {number[]} data Data series
+   * @param {number} window Window size
+   * @returns {number[]} SMA series
+   */
+  async calculateSMA(data, window) {
+    return financialStats.calculateSMA(data, window);
+  }
+
+  /**
+   * Calculate the exponential moving average (EMA)
+   * @param {number[]} data Data series
+   * @param {number} window Window size
+   * @returns {number[]} EMA series
+   */
+  async calculateEMA(data, window) {
+    return financialStats.calculateEMA(data, window);
+  }
+
+  /**
+   * Calculate the Relative Strength Index (RSI)
+   * @param {number[]} data Data series
+   * @param {number} window Window size
+   * @returns {number[]} RSI series
+   */
+  async calculateRSI(data, window) {
+    return financialStats.calculateRSI(data, window);
+  }
+
+  /**
+   * Run a Monte Carlo simulation
+   * @param {number} initialValue Initial value
+   * @param {number} numSimulations Number of simulations
+   * @param {number} numPeriods Number of periods
+   * @param {Function} generator Random number generator function
+   * @returns {number[][]} Simulated series
+   */
+  async runMonteCarloSimulation(initialValue, numSimulations, numPeriods, generator) {
+    return financialStats.runMonteCarloSimulation(initialValue, numSimulations, numPeriods, generator);
+  }
+
+  /**
+   * Calculate the confidence interval
+   * @param {number[]} data Data series
+   * @param {number} confidence Confidence level (e.g., 0.95 for 95% confidence interval)
+   * @returns {{lower: number, upper: number}} Confidence interval
+   */
+  async calculateConfidenceInterval(data, confidence) {
+    return financialStats.calculateConfidenceInterval(data, confidence);
   }
 }
 
